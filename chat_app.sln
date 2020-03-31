@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D257B62B-E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat_app.domain.test", "test\chat_app.domain.test\chat_app.domain.test.csproj", "{1B4AC66A-861D-4774-966E-2374342CB81E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chat_app.web", "src\chat_app.web\chat_app.web.csproj", "{B5161C03-7959-4BF6-94F1-EA5B51D2FC85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{1B4AC66A-861D-4774-966E-2374342CB81E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B4AC66A-861D-4774-966E-2374342CB81E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B4AC66A-861D-4774-966E-2374342CB81E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5161C03-7959-4BF6-94F1-EA5B51D2FC85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5161C03-7959-4BF6-94F1-EA5B51D2FC85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5161C03-7959-4BF6-94F1-EA5B51D2FC85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5161C03-7959-4BF6-94F1-EA5B51D2FC85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{C1B11FD6-E371-4155-B5A9-8F4A1EAC5D02} = {E3D05EFE-C103-47B0-8014-C06CA7A36218}
 		{1B4AC66A-861D-4774-966E-2374342CB81E} = {D257B62B-E781-4E1C-B917-4F5AB51F2190}
+		{B5161C03-7959-4BF6-94F1-EA5B51D2FC85} = {E3D05EFE-C103-47B0-8014-C06CA7A36218}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C7AFFA2A-471A-4AA5-A0AE-556367F4BC1C}
