@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using chat_app.domain;
 using chat_app.domain.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,19 @@ namespace chat_app.web
                 options.UseSqlServer (Configuration.GetConnectionString ("ChatDb"));
             });
 
+            services.AddSingleton<ISecurePasswordService, SecurePasswordService> ();
+            services.AddTransient<Func<ChatContext>> (x => () => x.GetService<ChatContext> ());
+            services.AddTransient<ChatUserService> ();
+
+            services.AddAuthentication (CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie (options => {
+                        options.Cookie.HttpOnly = false;
+                        options.ExpireTimeSpan = TimeSpan.FromMinutes (5);
+
+                        options.LoginPath = "/User/LogIn";
+                        options.SlidingExpiration = true;
+                    });
+
             services.AddControllersWithViews ();
         }
 
@@ -46,6 +61,7 @@ namespace chat_app.web
 
             app.UseRouting ();
 
+            app.UseAuthentication ();
             app.UseAuthorization ();
 
             app.UseEndpoints (endpoints => {

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace chat_app.web.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
     {
         public IActionResult Index()
