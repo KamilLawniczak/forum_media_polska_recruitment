@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 
 namespace chat_app.domain.Data
 {
     public class ChatContext : DbContext
     {
-        public ChatContext([NotNullAttribute] DbContextOptions options) : base (options)
+        public ChatContext([NotNull] DbContextOptions options) : base (options)
         {
         }
 
-        protected ChatContext()
+        public ChatContext()
         {
         }
 

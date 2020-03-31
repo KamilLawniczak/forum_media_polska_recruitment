@@ -5,7 +5,7 @@ using System.Text;
 
 namespace chat_app.domain
 {
-    public class SecurePasswordService
+    public class SecurePasswordService : ISecurePasswordService
     {
         private const int SALT_LENGTH = 255;
         private static readonly RNGCryptoServiceProvider _rng;
@@ -21,7 +21,7 @@ namespace chat_app.domain
             var salt = GenerateSalt ();
             var nameAndPasswordSalted = MergeArrays (nameAndPassword, salt);
 
-            using (HashAlgorithm alg = SHA512.Create())
+            using (HashAlgorithm alg = SHA512.Create ())
             {
                 var passwordHash = alg.ComputeHash (nameAndPasswordSalted);
                 return (passwordHash, salt);
