@@ -26,13 +26,17 @@ namespace chat_app.domain.Data
                         .HasIndex (i => i.Name);
 
             modelBuilder.Entity<ChatUser> ()
-                        .Property (b => b.Name).HasMaxLength (100);
+                        .Property (p => p.Id)
+                        .ValueGeneratedNever ();
 
             modelBuilder.Entity<ChatUser> ()
-                        .Property (b => b.PasswordHash).HasMaxLength (64);
+                        .Property (p => p.Name).HasMaxLength (100);
 
             modelBuilder.Entity<ChatUser> ()
-                        .Property (b => b.PasswordSalt).HasMaxLength (255);
+                        .Property (p => p.PasswordHash).HasMaxLength (64);
+
+            modelBuilder.Entity<ChatUser> ()
+                        .Property (p => p.PasswordSalt).HasMaxLength (255);
         }
     }
 }
