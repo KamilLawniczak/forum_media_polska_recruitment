@@ -2,7 +2,7 @@
 
 namespace chat_app.domain
 {
-    public class User
+    public class ChatUser
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
