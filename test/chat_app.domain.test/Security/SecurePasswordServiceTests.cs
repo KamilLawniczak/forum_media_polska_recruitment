@@ -53,7 +53,7 @@ namespace chat_app.domain.test.Security
         }
 
         [Fact]
-        public void Two_Users_Wirh_Same_Password_Will_Have_Different_Hashes()
+        public void Two_Users_With_Same_Password_Will_Have_Different_Hashes()
         {
             const string USER_NAME = "IAmUser";
             const string USER_NAME_2 = "IAmAnotherUser";
