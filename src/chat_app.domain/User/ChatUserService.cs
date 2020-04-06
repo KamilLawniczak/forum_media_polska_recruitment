@@ -7,18 +7,18 @@ namespace chat_app.domain
 {
     public class ChatUserService
     {
-        private readonly Func<ChatContext> _mkCtx;
+        private readonly Func<ChatContext> _mkChatContext;
         private readonly ISecurePasswordService _securePasswordService;
 
-        public ChatUserService(Func<ChatContext> mkCtx, ISecurePasswordService securePasswordService)
+        public ChatUserService(Func<ChatContext> mkChatContext, ISecurePasswordService securePasswordService)
         {
-            _mkCtx = mkCtx;
+            _mkChatContext = mkChatContext;
             _securePasswordService = securePasswordService;
         }
 
         public async Task AddNewUser(string userName, string password)
         {
-            using (var tx = _mkCtx ())
+            using (var tx = _mkChatContext ())
             {
                 var alreadyExists = await tx.ChatUsers.AnyAsync (x => x.Name == userName);
                 if (alreadyExists) throw new ArgumentException ("Provided user already exists");
@@ -39,7 +39,7 @@ namespace chat_app.domain
 
         public async Task<(bool success, ChatUser user)> TryLogIn(string userName, string password)
         {
-            using (var tx = _mkCtx ())
+            using (var tx = _mkChatContext ())
             {
                 var user = await tx.ChatUsers.SingleOrDefaultAsync (x => x.Name == userName);
 

@@ -1,7 +1,59 @@
-﻿
+﻿@model chat_app.web.ViewModels.ChatViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Hello Chat</h1>
+<div id="chat_data" style="display: none">@Html.Raw(Model.ToString())</div>
+<div class="row justify-content-md-center">
+    <div class="col-md-8">
+        <div class="tabbable">
+            <ul class="nav nav-tabs" data-bind="foreach: conversations">
+                <li class="nav-item" data-bind="css: { active: isSelected }">
+                    <a class="nav-link" href="#" data-bind="click: $parent.selectedConversation"><span data-bind="text: id" /></a>
+                </li>
+            </ul>
+            <div id="#messages" class="tab-content pre-scrollable" style="min-height: 600px;" data-bind="foreach: conversations">
+                <div class="tab-pane" data-bind="css: { active: isSelected }, foreach: messages">
+                    <div class="card">
+                        <h6 class="card-header" data-bind="text: userName">
+                        </h6>
+                        <div class="card-body">
+                            <p class="card-text" data-bind="text: content">
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <ul data-bind="foreach: onlineUsers">
+            <li class="list-item" data-bind="text: name">
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <input type="text" data-bind="textInput: typedMessage" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-info" data-bind="click: sendMessage, enable: canSendMessage" />
+    </div>
+</div>
+<script src="~/js/chatViewModel.js" asp-append-version="true"></script>
+<script src="~/js/chat.js" asp-append-version="true"></script>
 
+
+@*<h1>Hello Chat</h1>
+
+    <div class="col-md-7 pre-scrollable">
+        <ul data-bind="foreach: messages">
+            <li>
+                <div class="card card-body bg-dark">
+                    <div data-bind="text: text"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script src="~/js/chat.js" asp-append-version="true"></script>*@

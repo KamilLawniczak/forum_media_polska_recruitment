@@ -6,12 +6,23 @@
     <title>@ViewData["Title"] - chat_app.web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/knockout/build/output/knockout-latest.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">chat_app.web</a>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <span>Logged as: @User.Claims.SingleOrDefault(x => x.Type == "UserName").Value</span>
+                    <a class="navbar" asp-area="" asp-controller="User" asp-action="LogOut">LogOut</a>
+                    <div id="user_id" style="display: none">@User.Claims.SingleOrDefault(x => x.Type == "UserId").Value</div>
+                }
             </div>
         </nav>
     </header>
@@ -26,9 +37,9 @@
             &copy; 2020 - chat_app.web
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>
