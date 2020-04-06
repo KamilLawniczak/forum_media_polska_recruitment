@@ -7,6 +7,7 @@ using chat_app.domain;
 using chat_app.web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace chat_app.web.Controllers
@@ -41,7 +42,7 @@ namespace chat_app.web.Controllers
                     var claims = new List<Claim>
                         {
                             new Claim("UserId", result.user.Id.ToString()),
-                            new Claim(ClaimTypes.Name, result.user.Name)
+                            new Claim("UserName", result.user.Name)
                         };
 
                     var claimsIdentity = new ClaimsIdentity (
@@ -64,6 +65,13 @@ namespace chat_app.web.Controllers
             }
 
             return View ();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync ();
+            return RedirectToAction ("Index", "Chat");
         }
 
         [HttpGet]

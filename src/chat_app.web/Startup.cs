@@ -51,6 +51,7 @@ namespace chat_app.web
             if (env.IsDevelopment ())
             {
                 app.UseDeveloperExceptionPage ();
+                app.UseBrowserLink ();
             } else
             {
                 app.UseExceptionHandler ("/Home/Error");

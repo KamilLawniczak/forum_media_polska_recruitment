@@ -3,5 +3,84 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Hello Chat</h1>
+<div class="row justify-content-md-center flex-grow-1 bg-dark">
+    <div class="col-md-8">
+        <div class="tabbable" id="tabs-942584">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active show" href="#tab1" data-toggle="tab">Section 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#tab2" data-toggle="tab">Section 2</a>
+                </li>
+            </ul>
+            <div class="tab-content pre-scrollable" style="min-height: 600px;">
+                <div class="tab-pane active" id="panel-18743">
+                    <p>
+                        I'm in Section 1.
+                    </p>
+                </div>
+                <div class="tab-pane" id="tab2">
+                    <p>
+                        Howdy, I'm in Section 2.
+                    </p>
+                </div>
+                <div class="card">
+                    <h6 class="card-header">
+                        Card title
+                    </h6>
+                    <div class="card-body">
+                        <p class="card-text">
+                            Card content
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <ul>
+            <li class="list-item">
+                Lorem ipsum dolor sit amet
+            </li>
+            <li class="list-item">
+                Consectetur adipiscing elit
+            </li>
+            <li class="list-item">
+                Integer molestie lorem at massa
+            </li>
+            <li class="list-item">
+                Facilisis in pretium nisl aliquet
+            </li>
+            <li class="list-item">
+                Nulla volutpat aliquam velit
+            </li>
+            <li class="list-item">
+                Faucibus porta lacus fringilla vel
+            </li>
+            <li class="list-item">
+                Aenean sit amet erat nunc
+            </li>
+            <li class="list-item">
+                Eget porttitor lorem<span id="transmark"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+    </div>
+</div>
 
+@*<h1>Hello Chat</h1>
+
+    <div class="col-md-7 pre-scrollable">
+        <ul data-bind="foreach: messages">
+            <li>
+                <div class="card card-body bg-dark">
+                    <div data-bind="text: text"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <script src="~/js/chat.js" asp-append-version="true"></script>*@
