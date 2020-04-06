@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using chat_app.domain;
+using chat_app.domain.Data;
 using chat_app.web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -15,10 +16,12 @@ namespace chat_app.web.Controllers
     public class UserController : Controller
     {
         private readonly ChatUserService _chatUserService;
+        private readonly OnlineUsers _onlineUsers;
 
-        public UserController(ChatUserService chatUserService)
+        public UserController(ChatUserService chatUserService, OnlineUsers onlineUsers)
         {
             _chatUserService = chatUserService;
+            _onlineUsers = onlineUsers;
         }
 
         [HttpGet]
@@ -60,6 +63,8 @@ namespace chat_app.web.Controllers
                             new ClaimsPrincipal (claimsIdentity),
                             authProperties);
 
+                    _onlineUsers.AddOnlineUser (result.user.Id, result.user.Name);
+
                     return RedirectToAction ("Index", "Chat");
                 }
             }
@@ -70,7 +75,12 @@ namespace chat_app.web.Controllers
         [Authorize]
         public async Task<IActionResult> LogOut()
         {
+            var id = Guid.Parse(HttpContext.User.Claims.Single (x => x.Type == "UserId").Value);
+            
             await HttpContext.SignOutAsync ();
+
+            _onlineUsers.RemoveOnlineUser (id);
+
             return RedirectToAction ("Index", "Chat");
         }
 

@@ -1,76 +1,49 @@
-﻿
+﻿@model chat_app.web.ViewModels.ChatViewModel
 @{
     ViewData["Title"] = "Index";
 }
 
-<div class="row justify-content-md-center flex-grow-1 bg-dark">
+<div id="chat_data" style="display: none">@Html.Raw(Model.ToString())</div>
+<div class="row justify-content-md-center">
     <div class="col-md-8">
-        <div class="tabbable" id="tabs-942584">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link active show" href="#tab1" data-toggle="tab">Section 1</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#tab2" data-toggle="tab">Section 2</a>
+        <div class="tabbable">
+            <ul class="nav nav-tabs" data-bind="foreach: conversations">
+                <li class="nav-item" data-bind="css: { active: isSelected }">
+                    <a class="nav-link" href="#" data-bind="click: $parent.selectedConversation"><span data-bind="text: id" /></a>
                 </li>
             </ul>
-            <div class="tab-content pre-scrollable" style="min-height: 600px;">
-                <div class="tab-pane active" id="panel-18743">
-                    <p>
-                        I'm in Section 1.
-                    </p>
-                </div>
-                <div class="tab-pane" id="tab2">
-                    <p>
-                        Howdy, I'm in Section 2.
-                    </p>
-                </div>
-                <div class="card">
-                    <h6 class="card-header">
-                        Card title
-                    </h6>
-                    <div class="card-body">
-                        <p class="card-text">
-                            Card content
-                        </p>
+            <div id="#messages" class="tab-content pre-scrollable" style="min-height: 600px;" data-bind="foreach: conversations">
+                <div class="tab-pane" data-bind="css: { active: isSelected }, foreach: messages">
+                    <div class="card">
+                        <h6 class="card-header" data-bind="text: userName">
+                        </h6>
+                        <div class="card-body">
+                            <p class="card-text" data-bind="text: content">
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-4">
-        <ul>
-            <li class="list-item">
-                Lorem ipsum dolor sit amet
-            </li>
-            <li class="list-item">
-                Consectetur adipiscing elit
-            </li>
-            <li class="list-item">
-                Integer molestie lorem at massa
-            </li>
-            <li class="list-item">
-                Facilisis in pretium nisl aliquet
-            </li>
-            <li class="list-item">
-                Nulla volutpat aliquam velit
-            </li>
-            <li class="list-item">
-                Faucibus porta lacus fringilla vel
-            </li>
-            <li class="list-item">
-                Aenean sit amet erat nunc
-            </li>
-            <li class="list-item">
-                Eget porttitor lorem<span id="transmark"></span>
+        <ul data-bind="foreach: onlineUsers">
+            <li class="list-item" data-bind="text: name">
             </li>
         </ul>
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-10">
+        <input type="text" data-bind="textInput: typedMessage" />
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-info" data-bind="click: sendMessage, enable: canSendMessage" />
     </div>
 </div>
+<script src="~/js/chatViewModel.js" asp-append-version="true"></script>
+<script src="~/js/chat.js" asp-append-version="true"></script>
+
 
 @*<h1>Hello Chat</h1>
 

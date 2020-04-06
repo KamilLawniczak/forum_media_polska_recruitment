@@ -46,6 +46,28 @@ namespace chat_app.domain.Migrations
 
                     b.ToTable("ChatUsers");
                 });
+
+            modelBuilder.Entity("chat_app.domain.PublicMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset>("When")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("When");
+
+                    b.ToTable("PublicMessages");
+                });
 #pragma warning restore 612, 618
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using chat_app.domain;
 using chat_app.domain.Data;
+using chat_app.web.Hubs;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.SignalR;
 
 namespace chat_app.web
 {
@@ -33,6 +35,8 @@ namespace chat_app.web
             services.AddSingleton<ISecurePasswordService, SecurePasswordService> ();
             services.AddTransient<Func<ChatContext>> (x => () => x.GetService<ChatContext> ());
             services.AddTransient<ChatUserService> ();
+            services.AddTransient<MessageService> ();
+            services.AddSingleton<OnlineUsers> ();
 
             services.AddAuthentication (CookieAuthenticationDefaults.AuthenticationScheme)
                     .AddCookie (options => {
@@ -44,6 +48,7 @@ namespace chat_app.web
                     });
 
             services.AddControllersWithViews ();
+            services.AddSignalR ();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,6 +74,7 @@ namespace chat_app.web
                 endpoints.MapControllerRoute (
                     name: "default",
                     pattern: "{controller=Chat}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub> ("/chatHub");
             });
         }
     }

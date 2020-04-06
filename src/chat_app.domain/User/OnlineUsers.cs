@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace chat_app.domain.Data
+namespace chat_app.domain
 {
     public class OnlineUsers
     {
@@ -25,5 +25,23 @@ namespace chat_app.domain.Data
         }
 
         public IEnumerable<OnlineUser> List => _onlineUsers;
+
+        public void AddOnlineUser(Guid id, string name)
+        {
+            if(!_onlineUsers.Any(x => x.Id == id))
+            {
+                _onlineUsers.Add (new OnlineUser { Id = id, Name = name });
+            }
+        }
+
+        public void RemoveOnlineUser(Guid id)
+        {
+            var toRemove = _onlineUsers.SingleOrDefault (x => x.Id == id);
+
+            if(toRemove != null)
+            {
+                _onlineUsers.Remove (toRemove);
+            }
+        }
     }
 }

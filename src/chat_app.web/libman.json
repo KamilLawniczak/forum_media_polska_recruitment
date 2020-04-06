@@ -6,6 +6,15 @@
       "provider": "unpkg",
       "library": "knockout@3.5.1",
       "destination": "wwwroot/lib/knockout/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@microsoft/signalr@latest",
+      "destination": "wwwroot/lib/signalr/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
     }
   ]
 }
