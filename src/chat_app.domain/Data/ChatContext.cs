@@ -14,11 +14,43 @@ namespace chat_app.domain.Data
         }
 
         public DbSet<ChatUser> ChatUsers { get; set; }
+        public DbSet<PublicMessage> PublicMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating (modelBuilder);
 
+            ChatUserModel (modelBuilder);
+            PublicMessageModel (modelBuilder);
+        }
+
+        private static void PublicMessageModel(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PublicMessage> ()
+                                    .HasKey (k => k.Id);
+
+            modelBuilder.Entity<PublicMessage> ()
+                        .Property (p => p.Id)
+                        .ValueGeneratedNever ();
+
+            modelBuilder.Entity<PublicMessage> ()
+                        .HasIndex (i => i.When);
+
+            modelBuilder.Entity<PublicMessage> ()
+                        .Property (p => p.SenderId)
+                        .IsRequired ();
+
+            modelBuilder.Entity<PublicMessage> ()
+                        .Property (p => p.When)
+                        .IsRequired ();
+
+            modelBuilder.Entity<PublicMessage> ()
+                        .Property (p => p.Text)
+                        .IsRequired ();
+        }
+
+        private static void ChatUserModel(ModelBuilder modelBuilder)
+        {
             modelBuilder.Entity<ChatUser> ()
                         .HasKey (k => k.Id);
 
