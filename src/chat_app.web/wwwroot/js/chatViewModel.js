@@ -1,4 +1,18 @@
-﻿class chatViewModel {
+﻿class conversation {
+    constructor(id, messages) {
+        this.id = ko.observable(id);
+        this.messages = ko.observableArray(messages);
+    }
+}
+
+class onlineUser {
+    constructor(userId, name) {
+        this.userId = ko.observable(userId);
+        this.name = ko.observable(name);
+    }
+}
+
+class chatViewModel {
     constructor(onlineUsers, conversations) {
         this.onlineUsers = ko.observableArray(onlineUsers);
         this.conversations = ko.observableArray(conversations);
@@ -35,24 +49,28 @@
         conversation.messages.push(message);
         $("#messages").scroll();
     }
-}
 
-class conversation {
-    constructor(id, messages) {
-        this.id = ko.observable(id);
-        this.messages = ko.observableArray(messages);
-    }   
-}
+    addUser(usr) {
+        let id = usr.id;
+        let name = usr.name;
 
-class onlineUser {
-    constructor(userId, name) {
-        this.userId = ko.observable(userId);
-        this.name = ko.observable(name);
+        if (this.onlineUsers().some(x => x.userId() === id)) return;
+
+        let user = new onlineUser(id, name);
+        this.onlineUsers.push(user);
+    }
+
+    removeUser(id) {
+        const toRemove = this.onlineUsers().find(x => x.userId() === id);
+
+        if (toRemove === undefined) return;
+
+        this.onlineUsers.remove(toRemove);
     }
 }
 
 function matchUserName(message, onlineUsers) {
-    var user = onlineUsers.find(x => x.userId() == message.senderId);
+    let user = onlineUsers.find(x => x.userId() === message.senderId);
 
     if (user === undefined) {
         message.userName = message.senderId;

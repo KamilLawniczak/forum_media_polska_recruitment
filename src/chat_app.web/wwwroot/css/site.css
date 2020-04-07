@@ -70,6 +70,16 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
-.chat-window {
-    min-height:600px;
+.card {
+    width: 75% !important;
+    margin-top: 5px;
+}
+
+.card-body {
+    padding: 0px 0px 0px 5px !important;
+    background-color: #dddddd
+}
+
+.card-header {
+    padding: 0px 0px 2px 5px !important;
 }
