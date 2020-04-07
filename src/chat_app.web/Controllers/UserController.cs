@@ -5,11 +5,13 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using chat_app.domain;
 using chat_app.domain.Data;
+using chat_app.web.Hubs;
 using chat_app.web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace chat_app.web.Controllers
 {
@@ -17,11 +19,13 @@ namespace chat_app.web.Controllers
     {
         private readonly ChatUserService _chatUserService;
         private readonly OnlineUsers _onlineUsers;
+        private readonly IHubContext<ChatHub> _hubContext;
 
-        public UserController(ChatUserService chatUserService, OnlineUsers onlineUsers)
+        public UserController(ChatUserService chatUserService, OnlineUsers onlineUsers, IHubContext<ChatHub> hubContext)
         {
             _chatUserService = chatUserService;
             _onlineUsers = onlineUsers;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -78,6 +82,16 @@ namespace chat_app.web.Controllers
             var id = Guid.Parse(HttpContext.User.Claims.Single (x => x.Type == "UserId").Value);
             
             await HttpContext.SignOutAsync ();
+
+            var chatConnetcions = _onlineUsers.GetChatHubConnections (id);
+
+            var todo = chatConnetcions.Select (x => Task.Run(async () => 
+            {
+                await _hubContext.Clients.Client (x).SendAsync ("Disconnect");
+                return true;
+            }));
+
+            await Task.WhenAll (todo);
 
             _onlineUsers.RemoveOnlineUser (id);
 

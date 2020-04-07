@@ -22,6 +22,12 @@ signalRConnection.on("ReceivePublicMessage", message => {
     model.addMessage(message);
 });
 
+signalRConnection.on("ChatUserConnected", user => model.addUser(user));
+
+signalRConnection.on("ChatUserDisconnected", id => model.removeUser(id));
+
+signalRConnection.on("Disconnect", () => signalRConnection.stop());
+
 signalRConnection.start()
     .then(() => console.log("started signalr connection"))
     .catch(err => console.log(err));
