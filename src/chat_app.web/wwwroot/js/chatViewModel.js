@@ -21,7 +21,10 @@
                 matchUserName(m, onlineUsers)
                 this.messages.push(m);
             });
+            this.messages.sort((a, b) => new Date(a.sended) - new Date(b.sended));
         })).catch(err => console.log(err));
+
+
     }
 }
 
@@ -54,6 +57,8 @@ class chatViewModel {
         } else {
             this.sendPrivateMessage();
         }
+
+        return true;
     }
 
     sendPublicMessage = () => {
@@ -87,21 +92,20 @@ class chatViewModel {
 
     addPublicMessage = (message) => {
         const conversation = this.conversations().find(x => x.id() === "Public");
-        this.selectedConversation = conversation;
+        this.selectedConversation(conversation);
         conversation.messages.push(message);
         $("#messages").scroll();
     }
 
     addPrivateMessage = (message) => {
-        let conversation = this.conversations().find(x => x.id() === message.conversationId);
+        let conv = this.conversations().find(x => x.id() === message.conversationId);
 
-        if (conversation === undefined) {
-            const name = this.onlineUsers.find(x => x.id() === message.conversationId);
-            conversation = new conversation(message.conversationId, name, this.currentUserId(), []);
-            conversation.getMessagesPage();
+        if (conv === undefined) {
+            const interlocutor = this.onlineUsers().find(x => x.userId() === message.conversationId);
+            conv = this.openConversation(interlocutor);
         }
-        conversation.messages.push(message);
-        this.selectedConversation = conversation;
+        conv.messages.push(message);
+        this.selectedConversation(conv);
     }
 
     addUser = (usr) => {
@@ -127,6 +131,7 @@ class chatViewModel {
         conv.getMessagesPage(this.onlineUsers());
         conv.isSelected = ko.computed(() => conv.id() === this.selectedConversation().id(), conv)
         this.conversations.push(conv);
+        return conv;
     }
 }
 
@@ -136,7 +141,7 @@ function matchUserName(message, onlineUsers) {
     if (user === undefined) {
         message.userName = message.senderId;
     } else {
-        message.userName = user.name;
+        message.userName = user.name();
     }
 
 }
