@@ -15,6 +15,7 @@ namespace chat_app.domain.Data
 
         public DbSet<ChatUser> ChatUsers { get; set; }
         public DbSet<PublicMessage> PublicMessages { get; set; }
+        public DbSet<PrivateMessage> PrivateMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,6 +23,44 @@ namespace chat_app.domain.Data
 
             ChatUserModel (modelBuilder);
             PublicMessageModel (modelBuilder);
+            PrivateMessageModel (modelBuilder);
+        }
+
+        private static void PrivateMessageModel(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<PrivateMessage> ()
+                        .HasKey (k => k.Id);
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .Property (p => p.Id)
+                        .ValueGeneratedNever ();
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .HasIndex (i => i.SenderId);
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .HasIndex (i => i.ReceiverId);
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .Property (p => p.SenderId)
+                        .IsRequired ();
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .Property (p => p.ReceiverId)
+                        .IsRequired ();
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .Property (p => p.Sended)
+                        .IsRequired ();
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .Property (p => p.Received)
+                        .IsRequired ();
+
+            modelBuilder.Entity<PrivateMessage> ()
+                        .Property (p => p.Text)
+                        .IsRequired ();
+
         }
 
         private static void PublicMessageModel(ModelBuilder modelBuilder)
