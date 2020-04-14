@@ -83,3 +83,19 @@ body {
 .card-header {
     padding: 0px 0px 2px 5px !important;
 }
+
+.selectableUser {
+    list-style-type: none !important;
+    background-color:#dddddd;
+    font-weight: bold;
+    border: 0.5px;
+    border-color: chocolate;
+    border-style: dashed;
+    padding: 5px;
+}
+
+    .selectableUser:hover {
+        background-color: cornflowerblue;
+        cursor: pointer;
+
+    }

@@ -9,7 +9,7 @@
         <div class="tabbable">
             <ul class="nav nav-tabs" data-bind="foreach: conversations">
                 <li class="nav-item" data-bind="css: { active: isSelected }">
-                    <a class="nav-link" href="#" data-bind="click: $parent.selectedConversation"><span data-bind="text: id" /></a>
+                    <a class="nav-link" href="#" data-bind="click: $parent.selectedConversation"><span data-bind="text: name" /></a>
                 </li>
             </ul>
             <div id="#messages" class="tab-content pre-scrollable" style="min-height: 600px;" data-bind="foreach: conversations">
@@ -27,8 +27,10 @@
         </div>
     </div>
     <div class="col-md-4">
+        <h1>Users:</h1>
+        <hr />
         <ul data-bind="foreach: onlineUsers">
-            <li class="list-item" data-bind="text: name">
+            <li class="list-item selectableUser" data-bind="text: name, click: $parent.openConversation">
             </li>
         </ul>
     </div>
@@ -43,17 +45,3 @@
 </div>
 <script src="~/js/chatViewModel.js" asp-append-version="true"></script>
 <script src="~/js/chat.js" asp-append-version="true"></script>
-
-
-@*<h1>Hello Chat</h1>
-
-    <div class="col-md-7 pre-scrollable">
-        <ul data-bind="foreach: messages">
-            <li>
-                <div class="card card-body bg-dark">
-                    <div data-bind="text: text"></div>
-                </div>
-            </li>
-        </ul>
-    </div>
-    <script src="~/js/chat.js" asp-append-version="true"></script>*@
